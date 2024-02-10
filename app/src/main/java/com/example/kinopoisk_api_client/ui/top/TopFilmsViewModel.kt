@@ -32,4 +32,11 @@ class TopFilmsViewModel @Inject constructor(private val repository: KinopoiskRep
             }
         }
     }
+
+    fun isEmpty(): Boolean {
+        if (_films.value.data != null) {
+            return _films.value.data!!.isEmpty()
+        }
+        return true
+    }
 }
