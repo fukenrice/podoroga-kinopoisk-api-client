@@ -22,19 +22,19 @@ import org.mockito.Mockito.`when`
 class TopFilmsViewModelTest {
     private lateinit var viewModel: TopFilmsViewModel
     private lateinit var repository: KinopoiskRepository
-    private val films = listOf<FilmListItem>(
+    private val films = listOf(
         FilmListItem(
             filmId = 0,
             nameRu = "first",
             year = "2002",
-            genre = listOf(Genre("genre")),
+            genres = listOf(Genre("genre")),
             posterUrlPreview = ""
         ),
         FilmListItem(
             filmId = 2,
             nameRu = "second",
             year = "2024",
-            genre = listOf(Genre("genre")),
+            genres = listOf(Genre("genre")),
             posterUrlPreview = ""
         ),
     )
@@ -62,14 +62,14 @@ class TopFilmsViewModelTest {
                 filmId = 0,
                 nameRu = "first",
                 year = "2002",
-                genre = listOf(Genre("genre")),
+                genres = listOf(Genre("genre")),
                 posterUrlPreview = ""
             ),
             FilmListItem(
                 filmId = 2,
                 nameRu = "second",
                 year = "2024",
-                genre = listOf(Genre("genre")),
+                genres = listOf(Genre("genre")),
                 posterUrlPreview = ""
             ),
         )

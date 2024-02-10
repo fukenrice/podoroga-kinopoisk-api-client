@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kinopoisk_api_client.R
-import com.example.kinopoisk_api_client.data.model.Film
 import com.example.kinopoisk_api_client.data.model.FilmListItem
 import com.example.kinopoisk_api_client.databinding.FilmListItemBinding
 import com.squareup.picasso.Picasso
@@ -17,6 +16,7 @@ class FilmsAdapter(
     data: List<FilmListItem>
 ) : RecyclerView.Adapter<FilmsAdapter.DataViewHolder>() {
     private val data: MutableList<FilmListItem>
+
     init {
         this.data = data.toMutableList()
     }
@@ -32,7 +32,11 @@ class FilmsAdapter(
             binding.tvFilmName.text =
                 if (film.nameRu.length <= 20) film.nameRu else film.nameRu.substring(0, 19) + "..."
             binding.tvFilmInfo.text =
-                context.getString(R.string.film_desc, film.genre[0].genre, film.year)
+                context.getString(
+                    R.string.film_desc,
+                    film.genres[0].genre.replaceFirstChar { it.uppercase() },
+                    film.year
+                )
             binding.root.setOnClickListener { onItemClicked(film) }
         }
     }
