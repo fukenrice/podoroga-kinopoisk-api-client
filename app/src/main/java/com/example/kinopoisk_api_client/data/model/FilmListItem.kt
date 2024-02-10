@@ -1,6 +1,5 @@
 package com.example.kinopoisk_api_client.data.model
 
-import java.time.Year
 
 data class FilmListItem(
     val filmId: Int,
