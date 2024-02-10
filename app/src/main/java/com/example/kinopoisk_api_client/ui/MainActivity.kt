@@ -1,4 +1,4 @@
-package com.example.kinopoisk_api_client
+package com.example.kinopoisk_api_client.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -6,6 +6,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
+import com.example.kinopoisk_api_client.R
 import com.example.kinopoisk_api_client.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 

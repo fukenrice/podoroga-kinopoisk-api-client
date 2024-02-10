@@ -1,9 +1,15 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Base application theme. -->
     <style name="Base.Theme.Kinopoiskapiclient" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="colorPrimary">@color/blue</item>
+        <item name="android:windowBackground">@color/white</item>
+        <item name="appBarLayoutStyle">@style/MyAppBarTheme</item>
     </style>
 
     <style name="Theme.Kinopoiskapiclient" parent="Base.Theme.Kinopoiskapiclient" />
+
+    <style name="MyAppBarTheme">
+        <item name="android:background">@color/white</item>
+    </style>
 </resources>

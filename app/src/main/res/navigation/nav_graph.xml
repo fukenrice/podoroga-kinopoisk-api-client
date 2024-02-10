@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/FirstFragment"
-        android:name="com.example.kinopoisk_api_client.TopFilmsFragment"
+        android:name="com.example.kinopoisk_api_client.ui.top.TopFilmsFragment"
         android:label="@string/top_fragment_label"
         tools:layout="@layout/fragment_top_films">
 
