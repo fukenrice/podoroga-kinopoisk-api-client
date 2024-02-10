@@ -17,6 +17,7 @@ import com.example.kinopoisk_api_client.utils.resource.Status
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
+// Можно было бы использовать SwipeRefreshLayout, но при слишком частых свайпах он ломается и обсервер не успевает отключить анимацию, поэтому решил его убрать.
 @AndroidEntryPoint
 class TopFilmsFragment : Fragment() {
 
