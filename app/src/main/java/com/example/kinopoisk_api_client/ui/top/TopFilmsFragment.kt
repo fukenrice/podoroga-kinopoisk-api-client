@@ -65,7 +65,7 @@ class TopFilmsFragment : Fragment() {
         }
     }
 
-    private fun setupObserver() = lifecycleScope.launch {
+    private fun setupObserver() = viewLifecycleOwner.lifecycleScope.launch {
         repeatOnLifecycle(Lifecycle.State.STARTED) {
             viewModel.films.collect {
                 when (it.status) {
