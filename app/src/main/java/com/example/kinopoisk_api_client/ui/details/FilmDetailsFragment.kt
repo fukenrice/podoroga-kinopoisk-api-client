@@ -70,7 +70,7 @@ class FilmDetailsFragment : Fragment() {
         }
     }
 
-    private fun setupObserver() = lifecycleScope.launch {
+    private fun setupObserver() = viewLifecycleOwner.lifecycleScope.launch {
         repeatOnLifecycle(Lifecycle.State.STARTED) {
             viewModel.film.collect {
                 when (it.status) {
@@ -88,15 +88,17 @@ class FilmDetailsFragment : Fragment() {
                         binding.pbPoster.visibility = View.VISIBLE
                         Picasso.get().load(it.data.posterUrl).into(binding.ivPoster, object: Callback {
                             override fun onSuccess() {
-                                binding.pbPoster.visibility = View.GONE
+                                if (_binding != null) {
+                                    binding.pbPoster.visibility = View.GONE
+                                }
                             }
 
                             override fun onError(e: Exception?) {
-                                binding.pbPoster.visibility = View.GONE
+                                if (_binding != null) {
+                                    binding.pbPoster.visibility = View.GONE
+                                }
                             }
-
                         })
-
                     }
                     Status.LOADING -> {
                         showNetworking(true)
