@@ -16,9 +16,11 @@ class FilmsAdapter(
     data: List<FilmListItem>
 ) : RecyclerView.Adapter<FilmsAdapter.DataViewHolder>() {
     private val data: MutableList<FilmListItem>
+    private var displayedData: MutableList<FilmListItem>
 
     init {
         this.data = data.toMutableList()
+        displayedData = data.toMutableList()
     }
 
     inner class DataViewHolder(
@@ -47,13 +49,27 @@ class FilmsAdapter(
             LayoutInflater.from(parent.context).inflate(R.layout.film_list_item, parent, false)
         )
 
-    override fun getItemCount() = data.size
+    override fun getItemCount() = displayedData.size
 
     override fun onBindViewHolder(holder: DataViewHolder, position: Int) {
-        holder.bind(data[position])
+        holder.bind(displayedData[position])
     }
 
-    fun clear() = data.clear()
+    fun filter(query: String) {
+        val result = data.filter {
+            it.nameRu.lowercase().contains(query)
+        }.toMutableList()
+        displayedData = result
+        notifyDataSetChanged()
+    }
 
-    fun addData(films: List<FilmListItem>) = data.addAll(films)
+    fun clear() {
+        displayedData.clear()
+        data.clear()
+    }
+
+    fun addData(films: List<FilmListItem>) {
+        displayedData.addAll(films)
+        data.addAll(films)
+    }
 }
