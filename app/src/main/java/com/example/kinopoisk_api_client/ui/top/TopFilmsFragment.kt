@@ -1,15 +1,16 @@
 package com.example.kinopoisk_api_client.ui.top
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.kinopoisk_api_client.data.model.FilmListItem
 import com.example.kinopoisk_api_client.databinding.FragmentTopFilmsBinding
@@ -17,6 +18,7 @@ import com.example.kinopoisk_api_client.utils.resource.Status
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
+// Можно было бы использовать SwipeRefreshLayout, но при слишком частых свайпах он ломается и обсервер не успевает отключить анимацию, поэтому решил его убрать.
 @AndroidEntryPoint
 class TopFilmsFragment : Fragment() {
 
@@ -53,7 +55,7 @@ class TopFilmsFragment : Fragment() {
     }
 
     private fun setupView() {
-        adapter = FilmsAdapter(requireContext(), { film -> onItemClick(film) }, listOf() )
+        adapter = FilmsAdapter(requireContext(), { film -> onItemClick(film) }, listOf())
         binding.apply {
             networkView.button.setOnClickListener {
                 viewModel.getFilms()
@@ -73,11 +75,13 @@ class TopFilmsFragment : Fragment() {
                         binding.rvFilms.visibility = View.GONE
                         binding.networkView.root.visibility = View.VISIBLE
                     }
+
                     Status.LOADING -> {
                         showNetworking(true)
                         binding.rvFilms.visibility = View.GONE
                         binding.networkView.root.visibility = View.VISIBLE
                     }
+
                     Status.SUCCESS -> {
                         showNetworking(false)
                         binding.networkView.root.visibility = View.GONE
@@ -91,7 +95,7 @@ class TopFilmsFragment : Fragment() {
 
     private fun showNetworking(loading: Boolean) {
         binding.apply {
-        if (loading) {
+            if (loading) {
                 networkView.button.visibility = View.GONE
                 networkView.ivNetwork.visibility = View.GONE
                 networkView.tvMessage.visibility = View.GONE
@@ -106,7 +110,11 @@ class TopFilmsFragment : Fragment() {
     }
 
     private fun onItemClick(film: FilmListItem) {
-
+        val action = TopFilmsFragmentDirections.actionTopFragmentToDetailsFragment(
+            film.filmId,
+            if (film.nameRu.length <= 20) film.nameRu else film.nameRu.substring(0, 19) + "..."
+        )
+        findNavController().navigate(action)
     }
 
     private fun reloadData(films: List<FilmListItem>) {

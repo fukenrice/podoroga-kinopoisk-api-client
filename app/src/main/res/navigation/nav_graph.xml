@@ -3,26 +3,28 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/FirstFragment">
+    app:startDestination="@id/TopFilmsFragment">
 
     <fragment
-        android:id="@+id/FirstFragment"
+        android:id="@+id/TopFilmsFragment"
         android:name="com.example.kinopoisk_api_client.ui.top.TopFilmsFragment"
         android:label="@string/top_fragment_label"
         tools:layout="@layout/fragment_top_films">
 
         <action
-            android:id="@+id/action_FirstFragment_to_SecondFragment"
-            app:destination="@id/SecondFragment" />
+            android:id="@+id/action_TopFragment_to_DetailsFragment"
+            app:destination="@id/FilmDetailsFragment" />
     </fragment>
     <fragment
-        android:id="@+id/SecondFragment"
-        android:name="com.example.kinopoisk_api_client.FilmDetailsFragment"
+        android:id="@+id/FilmDetailsFragment"
+        android:name="com.example.kinopoisk_api_client.ui.details.FilmDetailsFragment"
         android:label="@string/film_details_fragment_label"
         tools:layout="@layout/fragment_film_details">
-
-        <action
-            android:id="@+id/action_SecondFragment_to_FirstFragment"
-            app:destination="@id/FirstFragment" />
+        <argument
+            android:name="id"
+            app:argType="integer" />
+        <argument
+            android:name="name"
+            app:argType="string" />
     </fragment>
 </navigation>
