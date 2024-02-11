@@ -49,6 +49,6 @@
     <string name="film_desc">%1$s (%2$s)</string>
     <string name="no_internet_message">Произошла ошибка при загрузке данных, проверьте подключение к сети</string>
     <string name="try_again">Повторить</string>
-    <string name="genres"><b>Жанры: </b> %1$s</string>
-    <string name="countries"><b>Страны: </b> %1$s</string>
+    <string name="genres"><![CDATA[<b>Жанры: </b>%1$s]]></string>
+    <string name="countries"><![CDATA[<b>Страны: </b>%1$s]]></string>
 </resources>

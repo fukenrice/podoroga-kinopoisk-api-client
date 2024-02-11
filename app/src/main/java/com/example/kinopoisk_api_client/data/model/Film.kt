@@ -9,4 +9,6 @@ data class Film(
     val countries: List<Country>
 )
 
-data class Country(val country: String)
+data class Country(val country: String) {
+    override fun toString(): String = country
+}

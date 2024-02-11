@@ -9,5 +9,6 @@ data class FilmListItem(
     val posterUrlPreview: String
 )
 
-data class Genre(val genre: String)
-
+data class Genre(val genre: String) {
+    override fun toString(): String = genre
+}
