@@ -4,9 +4,13 @@ import android.os.Bundle
 import android.text.Html
 import android.text.TextUtils
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -21,11 +25,11 @@ import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import java.lang.Exception
 import javax.inject.Inject
 
+
 @AndroidEntryPoint
-class FilmDetailsFragment : Fragment() {
+class FilmDetailsFragment : Fragment(), MenuProvider {
 
     private var _binding: FragmentFilmDetailsBinding? = null
 
@@ -52,6 +56,7 @@ class FilmDetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        requireActivity().addMenuProvider(this)
         setupView()
         setupObserver()
         if (viewModel.isEmpty()) {
@@ -80,32 +85,41 @@ class FilmDetailsFragment : Fragment() {
                         binding.llDetails.visibility = View.VISIBLE
                         binding.ivPoster.visibility = View.VISIBLE
                         val countries = TextUtils.join(", ", it.data!!.countries)
-                        binding.tvCountries.text =Html.fromHtml(getString(R.string.countries, countries), Html.FROM_HTML_MODE_LEGACY)
+                        binding.tvCountries.text = Html.fromHtml(
+                            getString(R.string.countries, countries),
+                            Html.FROM_HTML_MODE_LEGACY
+                        )
                         binding.tvName.text = it.data.nameRu
                         binding.tvDesc.text = it.data.description
                         val genres = TextUtils.join(", ", it.data.genres)
-                        binding.tvGenres.text = Html.fromHtml(getString(R.string.genres, genres), Html.FROM_HTML_MODE_LEGACY)
+                        binding.tvGenres.text = Html.fromHtml(
+                            getString(R.string.genres, genres),
+                            Html.FROM_HTML_MODE_LEGACY
+                        )
                         binding.pbPoster.visibility = View.VISIBLE
-                        Picasso.get().load(it.data.posterUrl).into(binding.ivPoster, object: Callback {
-                            override fun onSuccess() {
-                                if (_binding != null) {
-                                    binding.pbPoster.visibility = View.GONE
+                        Picasso.get().load(it.data.posterUrl)
+                            .into(binding.ivPoster, object : Callback {
+                                override fun onSuccess() {
+                                    if (_binding != null) {
+                                        binding.pbPoster.visibility = View.GONE
+                                    }
                                 }
-                            }
 
-                            override fun onError(e: Exception?) {
-                                if (_binding != null) {
-                                    binding.pbPoster.visibility = View.GONE
+                                override fun onError(e: Exception?) {
+                                    if (_binding != null) {
+                                        binding.pbPoster.visibility = View.GONE
+                                    }
                                 }
-                            }
-                        })
+                            })
                     }
+
                     Status.LOADING -> {
                         showNetworking(true)
                         binding.llDetails.visibility = View.GONE
                         binding.ivPoster.visibility = View.GONE
                         binding.networkView.root.visibility = View.VISIBLE
                     }
+
                     Status.ERROR -> {
                         showNetworking(false)
                         Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
@@ -133,4 +147,16 @@ class FilmDetailsFragment : Fragment() {
             }
         }
     }
+
+    override fun onPrepareMenu(menu: Menu) {
+        super.onPrepareMenu(menu)
+        val searchItem = menu.findItem(R.id.app_bar_search)
+        searchItem.isVisible = false
+    }
+
+    override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+
+    }
+
+    override fun onMenuItemSelected(menuItem: MenuItem): Boolean = false
 }

@@ -12,4 +12,9 @@
     <style name="MyAppBarTheme">
         <item name="android:background">@color/white</item>
     </style>
+
+    <style name="ToolbarTheme" parent="ThemeOverlay.MaterialComponents.Toolbar.Primary">
+        <item name="colorOnPrimary">@color/blue</item>
+    </style>
+
 </resources>

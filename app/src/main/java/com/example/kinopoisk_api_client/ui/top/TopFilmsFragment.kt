@@ -2,9 +2,14 @@ package com.example.kinopoisk_api_client.ui.top
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
 import android.widget.Toast
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -12,6 +17,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.kinopoisk_api_client.R
 import com.example.kinopoisk_api_client.data.model.FilmListItem
 import com.example.kinopoisk_api_client.databinding.FragmentTopFilmsBinding
 import com.example.kinopoisk_api_client.utils.resource.Status
@@ -20,7 +26,7 @@ import kotlinx.coroutines.launch
 
 // Можно было бы использовать SwipeRefreshLayout, но при слишком частых свайпах он ломается и обсервер не успевает отключить анимацию, поэтому решил его убрать.
 @AndroidEntryPoint
-class TopFilmsFragment : Fragment() {
+class TopFilmsFragment : Fragment(), MenuProvider {
 
     private var _binding: FragmentTopFilmsBinding? = null
 
@@ -42,6 +48,7 @@ class TopFilmsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        requireActivity().addMenuProvider(this)
         setupView()
         setupObserver()
         if (viewModel.isEmpty()) {
@@ -122,4 +129,27 @@ class TopFilmsFragment : Fragment() {
         adapter.addData(films)
         adapter.notifyDataSetChanged()
     }
+
+    override fun onPrepareMenu(menu: Menu) {
+        super.onPrepareMenu(menu)
+        val searchItem = menu.findItem(R.id.app_bar_search)
+        searchItem.isVisible = true
+        val searchView = searchItem.actionView as SearchView
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                adapter.filter(newText.toString())
+                return true
+            }
+        })
+    }
+
+    override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+
+    }
+
+    override fun onMenuItemSelected(menuItem: MenuItem): Boolean = false
 }
