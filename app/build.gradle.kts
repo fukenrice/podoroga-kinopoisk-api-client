@@ -23,7 +23,7 @@ android {
         versionCode = 1
         versionName = "1.0"
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "com.example.kinopoisk_api_client.MyTestRunner"
     }
 
     buildTypes {
@@ -77,7 +77,13 @@ dependencies {
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3")
     testImplementation("androidx.arch.core:core-testing:2.2.0")
     testImplementation("com.google.dagger:hilt-android-testing:2.48")
+    testImplementation("org.mockito:mockito-core:3.4.6")
     testAnnotationProcessor("com.google.dagger:hilt-compiler:2.48")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    androidTestImplementation("org.mockito:mockito-android:3.4.6")
+    androidTestImplementation("com.google.dagger:hilt-android-testing:2.48")
+    kaptAndroidTest("com.google.dagger:hilt-android-compiler:2.48")
+    androidTestAnnotationProcessor("com.google.dagger:hilt-android-compiler:2.48")
+
 }
